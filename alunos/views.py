@@ -5,7 +5,8 @@ from .models import Aluno
 
 def criar_aluno(request):
     if request.method == 'GET':
-        return render(request, 'criar_aluno.html')
+        status = request.GET.get('status')
+        return render(request, 'criar_aluno.html', {'status': status})    
     elif request.method == 'POST':
         # é assim que se pega os dados do formulario para salvar no banco
         nome = request.POST.get('nome')
@@ -13,9 +14,15 @@ def criar_aluno(request):
         email = request.POST.get('email')
 
         # validando os dados do formulario antes de serem salvos
-        '''if len(nome.strip()) == 0 or idade < 0:
-            ...'''
-    
+        if len(nome.strip()) == 0:
+            return redirect('/aluno/criar_aluno/?status=1')
+        
+        if not idade:
+            return redirect('/aluno/criar_aluno/?status=2')
+        
+        if int(idade) < 0:
+            return redirect('/aluno/criar_aluno/?status=3')
+        
         # criando uma instancia da classe modelo, e suas variaveis recebem o que vem do formulario
         aluno = Aluno(
             nome=nome,

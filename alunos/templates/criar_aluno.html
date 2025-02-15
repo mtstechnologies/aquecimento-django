@@ -10,16 +10,33 @@
     <br><br>
     <div class="container">
       <h1>Cadastro de aluno.</h1>
+      {% if status == '1' %}
+        <div class="alert alert-danger" role="alert">
+          Nome ou idade inválidos!
+        </div>
+      {% elif status == '0' %}
+        <div class="alert alert-success" role="alert">
+          Cadastro efetuado com sucesso!
+        </div>
+      {% elif status == '2' %}
+        <div class="alert alert-danger" role="alert">
+          Preencha a idade!
+        </div>
+      {% elif status == '3' %}
+        <div class="alert alert-danger" role="alert">
+          A idade deve ser maior do que zero!
+        </div>
+      {% endif %}
       <hr>
       <form action="{% url 'criar_aluno' %}" method="POST"> {% csrf_token %}
         <label for="">Nome:</label>
-        <input type="text" name="nome" class="form-control" placeholder="Digite seu nome">
+        <input type="text" required name="nome" class="form-control" placeholder="Digite seu nome">
         <br>
         <label for="">Idade:</label>
-        <input type="number" name="idade" class="form-control" placeholder="Digite sua idade">
+        <input type="number" required name="idade" class="form-control" placeholder="Digite sua idade">
         <br>
         <label for="">E-mail:</label>
-        <input type="email" name="email" class="form-control" placeholder="Digite seu e-mail">
+        <input type="email" required name="email" class="form-control" placeholder="Digite seu e-mail">
         <br>
         <input type="submit" class="btn btn-success">
       </form>
