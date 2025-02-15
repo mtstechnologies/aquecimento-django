@@ -6,7 +6,9 @@ from .models import Aluno
 def criar_aluno(request):
     if request.method == 'GET':
         status = request.GET.get('status')
-        return render(request, 'criar_aluno.html', {'status': status})    
+        #buscando dados do banco para preencher uma tabela no fronend
+        alunos = Aluno.objects.all()
+        return render(request, 'criar_aluno.html', {'status': status, 'alunos': alunos})    
     elif request.method == 'POST':
         # é assim que se pega os dados do formulario para salvar no banco
         nome = request.POST.get('nome')
